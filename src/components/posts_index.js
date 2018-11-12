@@ -5,13 +5,17 @@ import { Link } from 'react-router-dom';
 import _ from 'lodash';
 
 class PostsIndex extends Component {
-  componentDidMount() {
+
+  componentWillMount() {
     this.props.fetchPosts();
   }
 
   renderPosts() {
+    if(!this.props.posts) {
+      return <div className="emptyMessage">There are no posts yet... Why dont you go ahead and create one by clicking on the 'Add Post' button.</div>
+    } 
     //since this.props.posts is an object and not array we use lodash.map instead of React map.
-   return _.map(this.props.posts, post => {
+    return _.map(this.props.posts, post => {     
      return (
       <li className="list-group-item" key={post.id}>
       <Link to={`/posts/${post.id}`}>
@@ -19,21 +23,19 @@ class PostsIndex extends Component {
       </Link>
      </li>
      );
-   })
+   }); 
   }
 
   render() {
     return (
       <div>
+        <h2>Blog Posts</h2>
         <div className="text-xs-right">
           <Link className="btn btn-primary" to="/posts/new">
             Add a post
           </Link>
         </div>
-        <h3>Posts</h3>
-        <ul className="list-group">
-          {this.renderPosts()}
-        </ul>
+        <ul className="list-group">{this.renderPosts()}</ul>
       </div>
     )
   }

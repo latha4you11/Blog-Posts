@@ -4,8 +4,8 @@ import { fetchPost, deletePost } from '../actions';
 import { Link } from 'react-router-dom';
 
 class PostsShow extends Component {
+    
     componentDidMount() {
-        
         const { id } = this.props.match.params;//provided by react-router. params lists al the wildcard tokens in the url. 
         this.props.fetchPost(id);
     }
@@ -21,7 +21,7 @@ class PostsShow extends Component {
         const { post } = this.props;
 
         if(!post) {
-            return <div>Loading ...</div>
+            return <div className="loader"></div>
         }
 
         return (
@@ -36,8 +36,8 @@ class PostsShow extends Component {
                     Delete Post
                 </button>
                 <h3>{post.title}</h3>
-                <h6>Categories: {post.categories}</h6>
-                <p>{post.content}</p>
+                <h5>Category: {post.categories}</h5>
+                <p className="postContent">{post.content}</p>
             </div>
         );
     }
